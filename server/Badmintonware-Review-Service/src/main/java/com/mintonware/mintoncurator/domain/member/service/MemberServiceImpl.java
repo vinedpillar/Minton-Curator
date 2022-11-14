@@ -1,11 +1,20 @@
 package com.mintonware.mintoncurator.domain.member.service;
 
 import com.mintonware.mintoncurator.domain.member.entity.Member;
+import com.mintonware.mintoncurator.domain.member.repository.MemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class MemberServiceImpl implements MemberService {
+
+    private final MemberRepository memberRepository;
+
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public Member createMember(Member member) {
@@ -34,7 +43,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member findVerifiedMember(Long id) {
-        return null;
+        Optional<Member> optionalMember = memberRepository.findById(id);
+        Member findMember = optionalMember
+                .orElseThrow();
+
+        return findMember;
     }
 
     @Override
