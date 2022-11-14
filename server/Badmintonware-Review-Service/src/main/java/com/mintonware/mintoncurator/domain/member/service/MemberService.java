@@ -23,6 +23,9 @@ public interface MemberService {
     Member findVerifiedMember(Long id);
 
     // 회원 아이디 검증
+    void verifyExistsId(Long id);
+
+    // 회원 아이디 검증
     void verifyExistsNickname(String nickname);
 
     // 회원 메일 검증

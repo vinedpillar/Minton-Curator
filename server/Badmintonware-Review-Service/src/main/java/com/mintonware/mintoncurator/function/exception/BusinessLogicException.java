@@ -1,5 +1,13 @@
 package com.mintonware.mintoncurator.function.exception;
 
-public class BusinessLogicException extends RuntimeException {
+import lombok.Getter;
 
+public class BusinessLogicException extends RuntimeException {
+    @Getter
+    private ExceptionCode exceptionCode;
+
+    public BusinessLogicException(ExceptionCode exceptionCode) {
+        super(exceptionCode.getMessage());
+        this.exceptionCode = exceptionCode;
+    }
 }
