@@ -46,6 +46,7 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+    // 등록된 회원 검색
     @Override
     public Member findVerifiedMember(Long id) {
         Optional<Member> optionalMember = memberRepository.findById(id);
@@ -55,6 +56,10 @@ public class MemberServiceImpl implements MemberService {
         return findMember;
     }
 
+    // 등록된 아이디 검색
+
+
+    // 등록된 회원인지 확인
     @Override
     public void verifyExistsId(Long id) {
         Optional<Member> member = memberRepository.findById();
@@ -63,6 +68,7 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    // 등록된 닉네임인지 확인
     @Override
     public void verifyExistsNickname(String nickname) {
         Optional<Member> member = memberRepository.findByNickname(nickname);
@@ -71,6 +77,7 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    // 등록된 이메일인지 확인
     @Override
     public void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
