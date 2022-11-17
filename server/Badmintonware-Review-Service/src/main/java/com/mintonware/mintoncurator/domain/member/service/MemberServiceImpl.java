@@ -4,19 +4,19 @@ import com.mintonware.mintoncurator.domain.member.entity.Member;
 import com.mintonware.mintoncurator.domain.member.repository.MemberRepository;
 import com.mintonware.mintoncurator.function.exception.BusinessLogicException;
 import com.mintonware.mintoncurator.function.exception.ExceptionCode;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-
-    public MemberServiceImpl(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
 
     @Override
     public Member createMember(Member member) {
@@ -27,42 +27,54 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findMember(Long id) {
-        return null;
+    public Member findMember(Long memberId) {
+
+        return findVerifiedMember(memberId);
     }
 
     @Override
     public Page<Member> findMembers(int page, int size) {
-        return null;
+
+        return memberRepository.findAll(PageRequest.of(
+                page, size, Sort.by("memberId").descending()));
     }
 
     @Override
     public Member updateMember(Member member) {
-        return null;
+        Member findMember = findVerifiedMember(member.getMemberId());
+
+        Optional.ofNullable(member.getNickname())
+                .ifPresent(findMember::setNickname);
+        // 패스워드는 암호화해서 저장해야할 듯
+        // 패스워드 암호화 메서드 필요
+        Optional.ofNullable(member.getEmail())
+                .ifPresent(findMember::setEmail);
+        Optional.ofNullable(member.getGrade())
+                .ifPresent(findMember::setGrade);
+
+        return memberRepository.save(findMember);
     }
 
     @Override
-    public void deleteMember(Long id) {
-
+    public void deleteMember(Long memberId) {
+        Member findMember = findVerifiedMember(memberId);
+        memberRepository.delete(findMember);
     }
 
     // 등록된 회원 검색
     @Override
-    public Member findVerifiedMember(Long id) {
-        Optional<Member> optionalMember = memberRepository.findById(id);
-        Member findMember = optionalMember
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    public Member findVerifiedMember(Long memberId) {
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member findMember = optionalMember.orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return findMember;
     }
 
-    // 등록된 아이디 검색
-
-
     // 등록된 회원인지 확인
     @Override
-    public void verifyExistsId(Long id) {
-        Optional<Member> member = memberRepository.findById();
+    public void verifyExistsMemberId(Long memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
         if(member.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
         }

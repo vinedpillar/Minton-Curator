@@ -5,6 +5,3 @@ spring:
       path: /h2
   datasource:
     url: jdbc:h2:mem:test
-  sql:
-    init:
-      schema-locations: classpath*:database/h2/schema.sql

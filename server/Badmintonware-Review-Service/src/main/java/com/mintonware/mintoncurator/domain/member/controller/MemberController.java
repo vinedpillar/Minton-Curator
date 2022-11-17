@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/members")
@@ -19,7 +21,7 @@ public class MemberController {
     private final MemberMapper memberMapper;
 
     // 회원 생성 요청
-    @PostMapping
+    @PostMapping()
     public ResponseEntity postMember(@RequestBody MemberDto.Post requestBody) {
         Member member = memberMapper.memberPostToMember(requestBody);
         Member createdMember = memberService.createMember(member);
@@ -29,7 +31,9 @@ public class MemberController {
     }
 
     // 회원 조회 요청
-    public ResponseEntity getMember() {
+    @GetMapping("/{member=id}")
+    public ResponseEntity getMember(@PathVariable("member-id")@Positive Long id) {
+
 
         return new ResponseEntity<>();
     }

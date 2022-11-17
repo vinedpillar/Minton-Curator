@@ -8,7 +8,7 @@ public interface MemberService {
     Member createMember(Member member);
 
     // 회원 정보 확인
-    Member findMember(Long id);
+    Member findMember(Long memberId);
 
     // 모든 회원 정보 확인
     Page<Member> findMembers(int page, int size);
@@ -17,15 +17,15 @@ public interface MemberService {
     Member updateMember(Member member);
 
     // 회원 정보 삭제
-    void deleteMember(Long id);
+    void deleteMember(Long memberId);
 
     // 회원 정보가 있는지 확인
-    Member findVerifiedMember(Long id);
+    Member findVerifiedMember(Long memberId);
 
     // 회원 아이디 검증
-    void verifyExistsId(Long id);
+    void verifyExistsMemberId(Long memberId);
 
-    // 회원 아이디 검증
+    // 회원 닉네임 검증
     void verifyExistsNickname(String nickname);
 
     // 회원 메일 검증
