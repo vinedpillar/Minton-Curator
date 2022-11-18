@@ -2,7 +2,9 @@ package com.mintonware.mintoncurator.domain.member.service;
 
 import com.mintonware.mintoncurator.domain.member.entity.Member;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface MemberService {
     // 회원 생성
     Member createMember(Member member);
