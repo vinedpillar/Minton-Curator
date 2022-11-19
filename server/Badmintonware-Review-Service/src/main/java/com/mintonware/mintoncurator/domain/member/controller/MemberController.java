@@ -38,7 +38,7 @@ public class MemberController {
                 new SingleResponse<>(response), HttpStatus.CREATED);
     }
 
-    // 회원 조회 요청
+    // 회원 ID로 회원 조회 요청
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") @Positive Long memberId) {
         Member foundMember = memberService.findMember(memberId);
@@ -47,6 +47,9 @@ public class MemberController {
         return new ResponseEntity<>(
                 new SingleResponse<>(response), HttpStatus.OK);
     }
+
+    // 이메일로 회원 조회 요청
+
 
     @GetMapping
     // 모든 회원 조회 요청

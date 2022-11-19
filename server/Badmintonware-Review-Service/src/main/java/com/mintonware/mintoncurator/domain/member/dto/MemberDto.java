@@ -3,7 +3,6 @@ package com.mintonware.mintoncurator.domain.member.dto;
 import com.mintonware.mintoncurator.domain.member.entity.MemberStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
